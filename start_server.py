@@ -5,7 +5,10 @@ import pkg_resources
 from pkg_resources import DistributionNotFound, VersionConflict
 import sys
 
-## Check dependencies
+import config_example
+import kernel
+
+# Check dependencies
 with open('requirements.txt') as dependencies:
     try:
         pkg_resources.require(dependencies)
@@ -24,8 +27,7 @@ with open('requirements.txt') as dependencies:
         print('')
         sys.exit('Dependency error')
 
-## Check config
-import config_example
+# Check config
 conf_required   = set(config_example.config)
 conf_set        = set(config.config)
 if conf_required != conf_set and not conf_required.issubset(conf_set):
@@ -37,7 +39,6 @@ if conf_required != conf_set and not conf_required.issubset(conf_set):
     sys.exit('Configuration error')
 
 
-## Initialise Jarvis kernel
-import kernel
+# Initialise Jarvis kernel
 jarvis = kernel.init(config.config)
 jarvis.start()
